@@ -107,7 +107,7 @@ public class FileConverterImpl implements FileConverter {
             if (!student.getAttendanceOfStudent().isEmpty()) {
                 for (Map.Entry<Date, Boolean> entry : student.getAttendanceOfStudent().entrySet()) {
                     cellCount++;
-                    spreadsheet.setColumnWidth(cellCount, 2700);
+                    spreadsheet.setColumnWidth(cellCount, 3000);
                     cell = row.createCell(cellCount);
                     cell.setCellType(CellType.STRING);
                     cell.setCellValue(getAttendanceForTableByStudentAttendance(entry.getValue()));
@@ -117,7 +117,7 @@ public class FileConverterImpl implements FileConverter {
             if (!student.getPassedOrFailedLab().isEmpty()) {
                 for (Map.Entry<String, Boolean> entry : student.getPassedOrFailedLab().entrySet()) {
                     cellCount++;
-                    spreadsheet.setColumnWidth(cellCount, 6000);
+                    spreadsheet.setColumnWidth(cellCount, 7000);
                     cell = row.createCell(cellCount);
                     cell.setCellType(CellType.STRING);
                     cell.setCellValue(getPassedOrFailedLabForTableByStudents(entry.getValue()));
@@ -142,7 +142,7 @@ public class FileConverterImpl implements FileConverter {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         cell.setCellType(CellType.STRING);
         cell.setCellValue("ФИО");
-        if (!group.getStudents().get(0).getAttendanceOfStudent().isEmpty()) {
+        if (group != null && !group.getStudents().isEmpty() && !group.getStudents().get(0).getAttendanceOfStudent().isEmpty()) {
             int count = group.getStudents().get(0).getAttendanceOfStudent().size();
             List<Date> listDate = convertSetToList(group.getStudents().get(0).getAttendanceOfStudent().keySet());
             List<Date> sorted = sortListOfDates(listDate);
@@ -153,7 +153,7 @@ public class FileConverterImpl implements FileConverter {
                 currentlyCell = count;
             }
         }
-        if (!group.getStudents().get(0).getPassedOrFailedLab().isEmpty()) {
+        if (group != null && !group.getStudents().isEmpty() && !group.getStudents().get(0).getPassedOrFailedLab().isEmpty()) {
             int count = group.getStudents().get(0).getPassedOrFailedLab().size();
             List<String> listOfLabs = new ArrayList<>(group.getStudents().get(0).getPassedOrFailedLab().keySet());
             currentlyCell++;
@@ -220,6 +220,9 @@ public class FileConverterImpl implements FileConverter {
             List<Student> studentList = new ArrayList<>();
             Group group = groupsController.createGroup(groupId, groups, studentList);
             if (group == null) {
+                return null;
+            }
+            if (!sheet.getRow(0).getCell(0).getStringCellValue().equals("ФИО")) {
                 return null;
             }
             while (true) {

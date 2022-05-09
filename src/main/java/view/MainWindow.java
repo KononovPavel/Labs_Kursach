@@ -40,7 +40,7 @@ public class MainWindow extends JFrame {
     private Groups groupsGeneral;
     private final JFileChooser fileChooser = new JFileChooser();
 
-    private final String defaultPathToFiles = "C:/ProgramData/ExcelFilesForLaboratories";
+    private String defaultPathToFiles = "C:/ProgramData/ExcelFilesForLaboratories";
 
     private JPanel jpnlGroups;
     private JPanel jpnlStudentsTable;
@@ -55,6 +55,7 @@ public class MainWindow extends JFrame {
     private JButton jbtCurrentlyGroup = null;
     private boolean isAttendance = true;
     private boolean isAddedDate;
+    private boolean isAllGroupsWasDeleted = false;
     private FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel", "xls");
 
 
@@ -91,12 +92,13 @@ public class MainWindow extends JFrame {
         jpnlMain = new JPanel(null);
         JMenuBar jMenuBar = new JMenuBar();
 
-        boolean folderWasCreatedFirstly = isFolderExist(defaultPathToFiles);
+        boolean folderWasCreatedFirstly = isFolderExist();
         groupsGeneral = fileConverter.processFilesFromFolderRecursive(new File(defaultPathToFiles));
 
         if (groupsGeneral == null) {
-            showPanelWithoutGroups();
+            showPanelWithoutGroups(isAllGroupsWasDeleted);
         } else {
+            isAllGroupsWasDeleted = false;
             createMainWindow(groupsGeneral);
         }
 
@@ -176,7 +178,7 @@ public class MainWindow extends JFrame {
             @SneakyThrows
             @Override
             public void windowClosing(WindowEvent e) {
-                if (groupsGeneral != null) {
+                if (groupsGeneral != null && !isAllGroupsWasDeleted) {
                     for (Map.Entry<String, Group> entry : groupsGeneral.getGroups().entrySet()) {
                         groupController.sortStudentsByLastName(entry.getValue().getStudents(), true);
                         fileConverter.createFileFromGroup(entry.getValue(), defaultPathToFiles, true);
@@ -235,7 +237,7 @@ public class MainWindow extends JFrame {
             @SneakyThrows
             @Override
             public void windowDeactivated(WindowEvent e) {
-                if (groupsGeneral != null) {
+                if (groupsGeneral != null && !isAllGroupsWasDeleted) {
                     for (Map.Entry<String, Group> entry : groupsGeneral.getGroups().entrySet()) {
                         groupController.sortStudentsByLastName(entry.getValue().getStudents(), true);
                         fileConverter.createFileFromGroup(entry.getValue(), defaultPathToFiles, true);
@@ -343,7 +345,11 @@ public class MainWindow extends JFrame {
                 if (deletedGroup == null) {
                     JOptionPane.showMessageDialog(MainWindow.this, "Группа не была удалена", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    if (deletedGroup == currentlyGroup) {
+                    if (groups.isEmpty()) {
+                        isAllGroupsWasDeleted = true;
+                        showPanelWithoutGroups(isAllGroupsWasDeleted);
+                        JOptionPane.showMessageDialog(MainWindow.this, "Закончились группы", "Предупреждение", JOptionPane.WARNING_MESSAGE);
+                    } else if (deletedGroup == currentlyGroup) {
                         currentlyGroup = null;
                         currentlyGroupId = null;
                         jbtCurrentlyGroup = null;
@@ -628,8 +634,7 @@ public class MainWindow extends JFrame {
                     isFlagForAttendance[0] = !isFlagForAttendance[0];
                     List<Student> sortedStudents = groupController.sortStudentsByAttendanceCount(currentlyGroup.getStudents(), isFlagForAttendance[0]);
                     isAttendance = true;
-                    createStudentsPane(sortedStudents, isAttendance);
-                    setSortButtons();
+                    setStudentsTable(sortedStudents, isAttendance);
                 } else {
                     JOptionPane.showMessageDialog(MainWindow.this, "Не выбрана группа", "Ошибка", JOptionPane.WARNING_MESSAGE);
                 }
@@ -657,7 +662,6 @@ public class MainWindow extends JFrame {
                     List<Student> sortedStudents = groupController.sortStudentsByLastName(currentlyGroup.getStudents(), isFlagForLastName[0]);
                     isAttendance = true;
                     setStudentsTable(sortedStudents, isAttendance);
-
                 } else {
                     JOptionPane.showMessageDialog(MainWindow.this, "Не выбрана группа", "Ошибка", JOptionPane.WARNING_MESSAGE);
                 }
@@ -750,7 +754,8 @@ public class MainWindow extends JFrame {
         jpnlDeleteGroup.revalidate();
     }
 
-    private void showPanelWithoutGroups() {
+    private void showPanelWithoutGroups(boolean isGroupsWasDeleted) {
+        jpnlMain.removeAll();
         JLabel jlblNoGroupsImage = new JLabel(imageConverter.scaleImage("images/noFiles.png", 350, 350));
         jlblNoGroupsImage.setBounds((1920 / 2) - 200, (1040 / 2) - 400, 350, 350);
 
@@ -1381,13 +1386,15 @@ public class MainWindow extends JFrame {
             return result;
         }
     }
-    private boolean isFolderExist(String folderPath) throws IOException {
-        Path path = Paths.get(folderPath);
+
+    private boolean isFolderExist() throws IOException {
+        defaultPathToFiles = "/Users/" + System.getProperty("user.name") + "/ExcelFilesForLaboratories";
+        Path path = Paths.get(defaultPathToFiles);
         if (!Files.exists(path)) {
             Files.createDirectory(path);
             return true;
         } else {
-           return false;
+            return false;
         }
     }
 
