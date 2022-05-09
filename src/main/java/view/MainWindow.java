@@ -1397,10 +1397,6 @@ public class MainWindow extends JFrame {
             return false;
         }
     }
-
-    public static void main(String[] args) throws IOException, ParseException, InvalidFormatException {
-        MainWindow a = new MainWindow();
-    }
 }
 
 

@@ -25,7 +25,8 @@ public class StudentControllerImpl implements StudentController {
     /**
      * Метод, который добавляет всем студентам группы новое занятие, и автоматически
      * проставляет им отсутсвие
-     * @param dateOfLab - дата занятия
+     *
+     * @param dateOfLab   - дата занятия
      * @param studentList - список студентов
      * @throws ParseException - error
      */
@@ -40,7 +41,7 @@ public class StudentControllerImpl implements StudentController {
      * Метод, который удаляет у всех студентов группы дату занятия, при этом
      * валидируя по полям студента, чтобы правильно отобразить отсутствие
      *
-     * @param dateOfLab - дата занятия
+     * @param dateOfLab   - дата занятия
      * @param studentList - список студентов
      * @throws ParseException - error
      */
@@ -61,9 +62,9 @@ public class StudentControllerImpl implements StudentController {
     /**
      * Метод добавления / удаления посещения студента по определенной дате
      *
-     * @param student - студент
+     * @param student           - студент
      * @param isAttendanceOfLab - был ли на занятии
-     * @param dateOfLab - дата занятия
+     * @param dateOfLab         - дата занятия
      * @throws ParseException - error
      */
     @Override
@@ -80,9 +81,9 @@ public class StudentControllerImpl implements StudentController {
     /**
      * Метод добавления / удаления у студента сдачи лабораторной работы
      *
-     * @param student - студент
+     * @param student               - студент
      * @param isPassedOrFailedOfLab - сдана ли лабораторная
-     * @param lab - номер лабораторной работы(ключ)
+     * @param lab                   - номер лабораторной работы(ключ)
      */
     @Override
     public void addPassesOrFailedLabForStudent(Student student, boolean isPassedOrFailedOfLab, String lab) {
@@ -115,7 +116,7 @@ public class StudentControllerImpl implements StudentController {
      * Метод, удаляющий лабораторную работу у всех студентов
      *
      * @param studentList - список студентов
-     * @param lab - ключ лабораторной работы
+     * @param lab         - ключ лабораторной работы
      */
     @Override
     public void deleteLabForStudent(List<Student> studentList, String lab) {
@@ -123,6 +124,4 @@ public class StudentControllerImpl implements StudentController {
             student.getPassedOrFailedLab().remove(lab);
         }
     }
-
-
 }

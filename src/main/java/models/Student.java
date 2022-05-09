@@ -1,11 +1,8 @@
 package models;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,10 +23,8 @@ public class Student {
     private String lastName;
     private String patronymic;
     private String groupId;
-    private String studentId;//10702419 + 12
-    //кол-во посещений
+    private String studentId;
     private Integer countOfAttendance;
-    //лист дат, по которым можно будет получить студентов
     private Map<Date, Boolean> attendanceOfStudent = new HashMap<>();
-    private Map<String, Boolean> passedOrFailedLab = new HashMap<>();  // l01
+    private Map<String, Boolean> passedOrFailedLab = new HashMap<>();
 }

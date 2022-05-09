@@ -1,13 +1,10 @@
 package models;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.HashMap;
 import java.util.Map;
-
 /**
  *<p>Класс сущность</p>
  * <p>Класс представяет собой модель набора групп, со списком всех групп</p>
