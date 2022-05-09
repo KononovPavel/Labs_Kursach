@@ -91,7 +91,8 @@ public class FileConverterImpl implements FileConverter {
         spreadsheet.setColumnWidth(0,8000);
         FileOutputStream out;
         if (isNeedToCreatePath) {
-            out = new FileOutputStream(path + "/" + group.getGroupId() + ".xls");
+            String value = path.substring(1);
+            out = new FileOutputStream(value + "/" + group.getGroupId() + ".xls");
         } else {
             out = new FileOutputStream(path);
         }

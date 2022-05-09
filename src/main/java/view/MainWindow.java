@@ -33,11 +33,11 @@ import java.util.List;
  * @version 1.0
  */
 public class MainWindow extends JFrame {
-
     private Groups groupsGeneral;
     private final JFileChooser fileChooser = new JFileChooser();
+    private final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-    private final String defaultPathToFiles = getClass().getClassLoader().getResource("resources/files") == null ? "src/main/resources/files" : getClass().getClassLoader().getResource("resources/files").getPath();
+    private final String defaultPathToFiles = classLoader.getResource("resources").getPath() + "/files";
 
     private JPanel jpnlGroups;
     private JPanel jpnlStudentsTable;
@@ -73,9 +73,8 @@ public class MainWindow extends JFrame {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private Font getCourierFont(int fontSize, int fontType) {
-        return new Font("Courier", fontType, fontSize);
+        return new Font("Arial", fontType, fontSize);
     }
-
     /**
      * Конструктор, создающий главное окно приложения и заполняет его данными
      *
@@ -96,7 +95,7 @@ public class MainWindow extends JFrame {
         }
 
         JMenu FAQMenu = new JMenu("FAQ");
-        JMenuItem aboutProgramMenuItem = new JMenuItem("О программе", imageConverter.scaleImage("images/aboutProgram.png", 30, 30));
+        JMenuItem aboutProgramMenuItem = new JMenuItem("О программе", imageConverter.scaleImage("images/aboutProgram.png", 20, 20));
         aboutProgramMenuItem.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
@@ -111,7 +110,7 @@ public class MainWindow extends JFrame {
         FAQMenu.add(aboutProgramMenuItem);
         FAQMenu.addSeparator();
 
-        JMenuItem aboutAuthorMenuItem = new JMenuItem("Об авторе", imageConverter.scaleImage("images/aboutAuthor.png", 30, 30));
+        JMenuItem aboutAuthorMenuItem = new JMenuItem("Об авторе", imageConverter.scaleImage("images/aboutAuthor.png", 20, 20));
         aboutAuthorMenuItem.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
@@ -240,7 +239,7 @@ public class MainWindow extends JFrame {
         });
 
         setJMenuBar(jMenuBar);
-        setSize(1920, 1020);
+        setSize(1280, 685);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -250,36 +249,36 @@ public class MainWindow extends JFrame {
     private void createMainWindow(Groups groups) {
         jpnlMain.removeAll();
         jpnlGroups = new JPanel(null);
-        jpnlGroups.setSize(200, 1020);
-        jpnlGroups.setBounds((1920 / 2) - 100, 0, 200, 1020);
+        jpnlGroups.setSize(130, 680);
+        jpnlGroups.setBounds(573, 0, 133, 680);
         setGroupsButtons(groups.getGroups());
 
         jpnlControllers = new JPanel(null);
-        jpnlControllers.setSize(860, 150);
-        jpnlControllers.setBounds(1060, 820, 860, 150);
+        jpnlControllers.setSize(573, 100);
+        jpnlControllers.setBounds(707, 547, 573, 100);
         jpnlControllers.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         setSortButtons();
 
 
         jpnlStudentsTable = new JPanel(null);
-        jpnlStudentsTable.setSize(860, 820);
-        jpnlStudentsTable.setBounds(1060, 0, 860, 820);
+        jpnlStudentsTable.setSize(573, 547);
+        jpnlStudentsTable.setBounds(707, 0, 573, 547);
         jpnlStudentsTable.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         if (currentlyGroupId == null && currentlyGroup == null) {
             setNotActiveGroupViewForStudentsTable();
         }
 
         jpnlAddDateToLab = new JPanel(null);
-        jpnlAddDateToLab.setSize(860, 520);
-        jpnlAddDateToLab.setBounds(0, 520, 860, 520);
+        jpnlAddDateToLab.setSize(573, 347);
+        jpnlAddDateToLab.setBounds(0, 347, 573, 347);
         jpnlAddDateToLab.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         if (currentlyGroupId == null && currentlyGroup == null) {
             setNotActiveGroupViewForAddDateToLabPanel();
         }
 
         jpnlDeleteGroup = new JPanel(null);
-        jpnlDeleteGroup.setSize(430, 520);
-        jpnlDeleteGroup.setBounds(430, 0, 430, 520);
+        jpnlDeleteGroup.setSize(287, 347);
+        jpnlDeleteGroup.setBounds(287, 0, 287, 347);
         jpnlDeleteGroup.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         if (currentlyGroup == null && currentlyGroupId == null) {
             setNotActiveGroupViewForDeleteGroupPanel();
@@ -299,32 +298,32 @@ public class MainWindow extends JFrame {
     private void setDeleteGroupPanel(Map<String, Group> groups) {
         jpnlDeleteGroup.removeAll();
         JLabel jlblDeleteGroupTitle = new JLabel("Удаление группы");
-        jlblDeleteGroupTitle.setFont(getCourierFont(20, Font.PLAIN));
-        jlblDeleteGroupTitle.setBounds(430 / 2 - 80, 30, 250, 30);
+        jlblDeleteGroupTitle.setFont(getCourierFont(14, Font.PLAIN));
+        jlblDeleteGroupTitle.setBounds(90, 20, 167, 20);
 
         String[] groupsArray = getStringGroups(groups);
         JComboBox<String> jComBoxTypeOfGroups = new JComboBox<>(groupsArray);
 
         JLabel jlblPleaseSelect = new JLabel("Выберите группу");
-        jlblPleaseSelect.setFont(getCourierFont(24, Font.PLAIN));
-        jlblPleaseSelect.setBounds(120, 120, 200, 30);
+        jlblPleaseSelect.setFont(getCourierFont(18, Font.PLAIN));
+        jlblPleaseSelect.setBounds(70, 80, 200, 20);
 
-        jComBoxTypeOfGroups.setBounds(0, 180, 430, 100);
-        jComBoxTypeOfGroups.setSize(430, 100);
-        jComBoxTypeOfGroups.setFont(getCourierFont(24, Font.PLAIN));
+        jComBoxTypeOfGroups.setBounds(0, 120, 287, 67);
+        jComBoxTypeOfGroups.setSize(287, 67);
+        jComBoxTypeOfGroups.setFont(getCourierFont(18, Font.PLAIN));
 
         JLabel jlblSelectedGroup = new JLabel("");
-        jlblSelectedGroup.setBounds(100, 300, 300, 30);
-        jlblSelectedGroup.setFont(getCourierFont(20, Font.BOLD));
+        jlblSelectedGroup.setBounds(67, 200, 200, 20);
+        jlblSelectedGroup.setFont(getCourierFont(15, Font.BOLD));
 
         JLabel jlblDeletedImage = new JLabel();
-        jlblDeletedImage.setBounds(50, 300, 30, 30);
+        jlblDeletedImage.setBounds(33, 200, 20, 20);
 
         JButton jbtDeleteSelectedGroup = new JButton();
-        jbtDeleteSelectedGroup.setBounds(50, 370, 330, 60);
+        jbtDeleteSelectedGroup.setBounds(33, 247, 220, 40);
         jbtDeleteSelectedGroup.setText("Удалить группу");
         jbtDeleteSelectedGroup.setFocusPainted(false);
-        jbtDeleteSelectedGroup.setFont(getCourierFont(20, Font.PLAIN));
+        jbtDeleteSelectedGroup.setFont(getCourierFont(15, Font.PLAIN));
         jbtDeleteSelectedGroup.setEnabled(false);
 
         jbtDeleteSelectedGroup.addActionListener(new ActionListener() {
@@ -368,7 +367,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jlblSelectedGroup.setText("Удалить группу: " + String.valueOf(jComBoxTypeOfGroups.getSelectedItem()) + " ?");
-                jlblDeletedImage.setIcon(imageConverter.scaleImage("images/deleteGroupt.png", 30, 30));
+                jlblDeletedImage.setIcon(imageConverter.scaleImage("images/deleteGroupt.png", 20, 20));
                 jbtDeleteSelectedGroup.setEnabled(true);
             }
         });
@@ -385,19 +384,19 @@ public class MainWindow extends JFrame {
 
     private JPanel getCreateGroupPanel() {
         jpnlCreateGroup = new JPanel(null);
-        jpnlCreateGroup.setSize(430, 520);
-        jpnlCreateGroup.setBounds(0, 0, 430, 520);
+        jpnlCreateGroup.setSize(287, 347);
+        jpnlCreateGroup.setBounds(0, 0, 287, 347);
         jpnlCreateGroup.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         JLabel jlblCreateGroupTitle = new JLabel("Создание группы");
-        jlblCreateGroupTitle.setFont(getCourierFont(20, Font.PLAIN));
-        jlblCreateGroupTitle.setBounds(430 / 2 - 80, 30, 250, 30);
+        jlblCreateGroupTitle.setFont(getCourierFont(15, Font.PLAIN));
+        jlblCreateGroupTitle.setBounds(90, 20, 167, 20);
 
         JButton jbtOpenDialog = new JButton("Загрузить файл");
-        jbtOpenDialog.setSize(300, 60);
-        jbtOpenDialog.setBounds(65, 100, 300, 60);
+        jbtOpenDialog.setSize(200, 40);
+        jbtOpenDialog.setBounds(43, 67, 200, 40);
         jbtOpenDialog.setFocusPainted(false);
-        jbtOpenDialog.setFont(getCourierFont(24, Font.PLAIN));
+        jbtOpenDialog.setFont(getCourierFont(18, Font.PLAIN));
         jbtOpenDialog.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
@@ -408,11 +407,11 @@ public class MainWindow extends JFrame {
                 fileChooser.setDialogTitle("Выбор файла");
                 JButton jbtCreateGroup = new JButton();
                 JLabel jlblFilePath = new JLabel("");
-                jlblFilePath.setFont(getCourierFont(14, Font.PLAIN));
-                jlblFilePath.setBounds((430) / 2 - 70, 185, 230, 30);
+                jlblFilePath.setFont(getCourierFont(10, Font.PLAIN));
+                jlblFilePath.setBounds(97, 125, 153, 20);
 
                 JLabel jlblImageExcel = new JLabel("");
-                jlblImageExcel.setBounds((430) / 2 - 120, 180, 40, 40);
+                jlblImageExcel.setBounds(63, 120, 27, 27);
                 jpnlCreateGroup.add(jlblFilePath);
                 jpnlCreateGroup.add(jbtCreateGroup);
                 jpnlCreateGroup.add(jlblImageExcel);
@@ -424,12 +423,12 @@ public class MainWindow extends JFrame {
                     String fileName = filePath[filePath.length - 1];
                     jlblFilePath.setText(fileName);
                     jlblFilePath.setFont(getCourierFont(20, Font.BOLD));
-                    jlblImageExcel.setIcon(imageConverter.scaleImage("images/excel.png", 40, 40));
+                    jlblImageExcel.setIcon(imageConverter.scaleImage("images/excel.png", 27, 27));
                     jbtCreateGroup.setFocusPainted(false);
                     jbtCreateGroup.setText("Добавить группу");
-                    jbtCreateGroup.setFont(getCourierFont(20, Font.PLAIN));
-                    jbtCreateGroup.setSize(300, 60);
-                    jbtCreateGroup.setBounds(65, 250, 300, 60);
+                    jbtCreateGroup.setFont(getCourierFont(15, Font.PLAIN));
+                    jbtCreateGroup.setSize(200, 40);
+                    jbtCreateGroup.setBounds(43, 167, 200, 40);
                     jbtCreateGroup.addActionListener(new ActionListener() {
                         /**
                          * Invoked when an action occurs.
@@ -470,16 +469,16 @@ public class MainWindow extends JFrame {
 
     private void setGroupsButtons(Map<String, Group> groups) {
         jpnlGroups.removeAll();
-        int x = 10;
-        int y = 50;
-        JLabel jlblListGroupName = new JLabel("Список групп");
-        jlblListGroupName.setFont(getCourierFont(20, Font.PLAIN));
-        jlblListGroupName.setBounds(50, 10, 180, 40);
+        int x = 7;
+        int y = 33;
+        JLabel jlblListGroupName = new JLabel("");
+        jlblListGroupName.setFont(getCourierFont(15, Font.PLAIN));
+        jlblListGroupName.setBounds(33, 7, 120, 27);
         for (Map.Entry<String, Group> groupEntry : groups.entrySet()) {
             JButton jbtGroup = new JButton(groupEntry.getValue().getGroupId());
-            jbtGroup.setSize(180, 40);
-            jbtGroup.setBounds(x, y, 180, 40);
-            jbtGroup.setFont(getCourierFont(16, Font.PLAIN));
+            jbtGroup.setSize(120, 27);
+            jbtGroup.setBounds(x, y, 120, 27);
+            jbtGroup.setFont(getCourierFont(11, Font.PLAIN));
             jbtGroup.setFocusPainted(false);
             if (jbtCurrentlyGroup != null && jbtGroup.getText().equals(jbtCurrentlyGroup.getText())) {
                 jbtCurrentlyGroup.setBackground(null);
@@ -516,7 +515,7 @@ public class MainWindow extends JFrame {
                     jbtGroup.setBackground(Color.PINK);
 
                     jlblListGroupName.setText(currentlyGroupId);
-                    jlblListGroupName.setBounds(50, 10, 180, 40);
+                    jlblListGroupName.setBounds(33, 7, 120, 27);
 
                     jpnlStudentsTable.removeAll();
                     setStudentsTable(groupController.sortStudentsByLastName(currentlyGroup.getStudents(), true), isAttendance);
@@ -531,7 +530,7 @@ public class MainWindow extends JFrame {
                 }
             });
             jpnlGroups.add(jbtGroup);
-            y += 50;
+            y += 33;
         }
         jpnlGroups.add(jlblListGroupName);
         jpnlGroups.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -542,13 +541,13 @@ public class MainWindow extends JFrame {
     private void setSortButtons() {
         jpnlControllers.removeAll();
         jbtStudentsAttendanceCount = new JButton("Посещение студентов");
-        jbtStudentsAttendanceCount.setFont(getCourierFont(16, Font.PLAIN));
+        jbtStudentsAttendanceCount.setFont(getCourierFont(11, Font.PLAIN));
 
         jbtStudentsPassedOrFailedLab = new JButton("Лабораторные работы");
-        jbtStudentsPassedOrFailedLab.setFont(getCourierFont(16, Font.PLAIN));
+        jbtStudentsPassedOrFailedLab.setFont(getCourierFont(11, Font.PLAIN));
 
-        jbtStudentsAttendanceCount.setBounds(0, 0, 430, 50);
-        jbtStudentsPassedOrFailedLab.setBounds(430, 0, 430, 50);
+        jbtStudentsAttendanceCount.setBounds(0, 0, 287, 33);
+        jbtStudentsPassedOrFailedLab.setBounds(287, 0, 287, 33);
 
         jbtStudentsAttendanceCount.addActionListener(new ActionListener() {
             /**
@@ -607,10 +606,10 @@ public class MainWindow extends JFrame {
 
         jbtSortStudentsByAttendanceCount = new JButton("Сортировка по посещениям");
         jbtSortStudentsByAttendanceCount.setFocusPainted(false);
-        jbtSortStudentsByAttendanceCount.setSize(270, 80);
-        jbtSortStudentsByAttendanceCount.setBounds(10, 55, 270, 80);
-        jbtSortStudentsByAttendanceCount.setFont(getCourierFont(14, Font.PLAIN));
-        ImageIcon jImgSortStudentsByAttendance = imageConverter.scaleImage("images/sort_1.png", 20, 20);
+        jbtSortStudentsByAttendanceCount.setSize(180, 47);
+        jbtSortStudentsByAttendanceCount.setBounds(0, 33, 180, 47);
+        jbtSortStudentsByAttendanceCount.setFont(getCourierFont(10, Font.PLAIN));
+        ImageIcon jImgSortStudentsByAttendance = imageConverter.scaleImage("images/sort_1.png", 14, 14);
         jbtSortStudentsByAttendanceCount.setIcon(jImgSortStudentsByAttendance);
         final boolean[] isFlagForAttendance = {true};
         jbtSortStudentsByAttendanceCount.addActionListener(new ActionListener() {
@@ -623,8 +622,7 @@ public class MainWindow extends JFrame {
                     isFlagForAttendance[0] = !isFlagForAttendance[0];
                     List<Student> sortedStudents = groupController.sortStudentsByAttendanceCount(currentlyGroup.getStudents(), isFlagForAttendance[0]);
                     isAttendance = true;
-                    createStudentsPane(sortedStudents, isAttendance);
-                    setSortButtons();
+                    setStudentsTable(sortedStudents, isAttendance);
                 } else {
                     JOptionPane.showMessageDialog(MainWindow.this, "Не выбрана группа", "Ошибка", JOptionPane.WARNING_MESSAGE);
                 }
@@ -635,10 +633,10 @@ public class MainWindow extends JFrame {
 
         jbtSortStudentsByLastNameButton = new JButton("Сортировка по фамилии");
         jbtSortStudentsByLastNameButton.setFocusPainted(false);
-        jbtSortStudentsByLastNameButton.setSize(270, 80);
-        jbtSortStudentsByLastNameButton.setBounds(270 + 20, 55, 270, 80);
-        jbtSortStudentsByLastNameButton.setFont(getCourierFont(14, Font.PLAIN));
-        ImageIcon jImgSortStudentsByLastName = imageConverter.scaleImage("images/sortA_Z.png", 20, 20);
+        jbtSortStudentsByLastNameButton.setSize(180, 47);
+        jbtSortStudentsByLastNameButton.setBounds(190, 33, 180, 47);
+        jbtSortStudentsByLastNameButton.setFont(getCourierFont(10, Font.PLAIN));
+        ImageIcon jImgSortStudentsByLastName = imageConverter.scaleImage("images/sortA_Z.png", 15, 15);
         jbtSortStudentsByLastNameButton.setIcon(jImgSortStudentsByLastName);
         final boolean[] isFlagForLastName = {true};
         jbtSortStudentsByLastNameButton.addActionListener(new ActionListener() {
@@ -682,9 +680,9 @@ public class MainWindow extends JFrame {
                     }
                 }
             });
-            typeOfDates.setBounds(270 + 270 + 20 + 10, 55, 270, 80);
-            typeOfDates.setSize(270, 80);
-            typeOfDates.setFont(getCourierFont(24, Font.PLAIN));
+            typeOfDates.setBounds(380, 33, 180, 47);
+            typeOfDates.setSize(180, 47);
+            typeOfDates.setFont(getCourierFont(18, Font.PLAIN));
             jpnlControllers.add(typeOfDates);
             jpnlControllers.repaint();
             jpnlControllers.revalidate();
@@ -708,11 +706,11 @@ public class MainWindow extends JFrame {
     //Заглушки для неактивной группы
     private void setNotActiveGroupViewForStudentsTable() {
         jpnlStudentsTable.removeAll();
-        JLabel jlblNotActiveGroupImg = new JLabel(imageConverter.scaleImage("images/not_active_group.png", 200, 200));
-        jlblNotActiveGroupImg.setBounds(860 / 2 - 100, 820 / 2 - 100, 200, 200);
+        JLabel jlblNotActiveGroupImg = new JLabel(imageConverter.scaleImage("images/not_active_group.png", 133, 133));
+        jlblNotActiveGroupImg.setBounds(220, 207, 133, 133);
         JLabel jlblNotActiveGroup = new JLabel("Пожалуйста, выберите группу студентов");
-        jlblNotActiveGroup.setFont(getCourierFont(20, Font.PLAIN));
-        jlblNotActiveGroup.setBounds(250, 550, 500, 50);
+        jlblNotActiveGroup.setFont(getCourierFont(14, Font.PLAIN));
+        jlblNotActiveGroup.setBounds(167, 367, 333, 33);
         jpnlStudentsTable.add(jlblNotActiveGroup);
         jpnlStudentsTable.add(jlblNotActiveGroupImg);
         jpnlStudentsTable.repaint();
@@ -721,11 +719,11 @@ public class MainWindow extends JFrame {
 
     private void setNotActiveGroupViewForAddDateToLabPanel() {
         jpnlAddDateToLab.removeAll();
-        JLabel jlblNotActiveGroupImg = new JLabel(imageConverter.scaleImage("images/not_active_group_for_date.png", 200, 200));
-        jlblNotActiveGroupImg.setBounds(860 / 2 - 100, 520 / 2 - 170, 200, 200);
+        JLabel jlblNotActiveGroupImg = new JLabel(imageConverter.scaleImage("images/not_active_group_for_date.png", 133, 133));
+        jlblNotActiveGroupImg.setBounds(220, 60, 133, 133);
         JLabel jlblNotActiveGroup = new JLabel("Добавление даты будет доступно после выбора группы студентов");
-        jlblNotActiveGroup.setFont(getCourierFont(24, Font.PLAIN));
-        jlblNotActiveGroup.setBounds(60, 300, 800, 50);
+        jlblNotActiveGroup.setFont(getCourierFont(16, Font.PLAIN));
+        jlblNotActiveGroup.setBounds(40, 200, 533, 33);
         jpnlAddDateToLab.add(jlblNotActiveGroupImg);
         jpnlAddDateToLab.add(jlblNotActiveGroup);
         jpnlAddDateToLab.repaint();
@@ -734,11 +732,11 @@ public class MainWindow extends JFrame {
 
     private void setNotActiveGroupViewForDeleteGroupPanel() {
         jpnlDeleteGroup.removeAll();
-        JLabel jlblWithoutGroupsImg = new JLabel(imageConverter.scaleImage("images/deleteWithoutGroups.png", 200, 200));
+        JLabel jlblWithoutGroupsImg = new JLabel(imageConverter.scaleImage("images/deleteWithoutGroups.png", 133, 133));
         JLabel jlblWithoutGroups = new JLabel("Выберите или добавьте группу(ы)");
-        jlblWithoutGroupsImg.setBounds(430 / 2 - 100, 520 / 2 - 100, 200, 200);
-        jlblWithoutGroups.setFont(getCourierFont(20, Font.PLAIN));
-        jlblWithoutGroups.setBounds(40, 400, 400, 30);
+        jlblWithoutGroupsImg.setBounds(77, 107, 133, 133);
+        jlblWithoutGroups.setFont(getCourierFont(15, Font.PLAIN));
+        jlblWithoutGroups.setBounds(27, 267, 267, 20);
         jpnlDeleteGroup.add(jlblWithoutGroupsImg);
         jpnlDeleteGroup.add(jlblWithoutGroups);
         jpnlDeleteGroup.repaint();
@@ -746,26 +744,28 @@ public class MainWindow extends JFrame {
     }
 
     private void showPanelWithoutGroups() {
-        JLabel jlblNoGroupsImage = new JLabel(imageConverter.scaleImage("images/noFiles.png", 350, 350));
-        jlblNoGroupsImage.setBounds((1920 / 2) - 200, (1040 / 2) - 400, 350, 350);
+
+        // setSize(1280, 680);
+        JLabel jlblNoGroupsImage = new JLabel(imageConverter.scaleImage("images/noFiles.png", 233, 233));
+        jlblNoGroupsImage.setBounds(507, 80, 233, 233);
 
         JLabel jlblNoGroups = new JLabel("Выполнен первый раз вход в приложение");
-        jlblNoGroups.setFont(getCourierFont(30, Font.PLAIN));
-        jlblNoGroups.setBounds(700, 470, 800, 60);
+        jlblNoGroups.setFont(getCourierFont(20, Font.PLAIN));
+        jlblNoGroups.setBounds(467, 313, 533, 40);
 
         JLabel jlblNoGroupsHelper = new JLabel("Или мы просто не смогли найти файлы во внутренней системе");
-        jlblNoGroupsHelper.setFont(getCourierFont(24, Font.PLAIN));
-        jlblNoGroupsHelper.setBounds(600, 530, 800, 60);
+        jlblNoGroupsHelper.setFont(getCourierFont(16, Font.PLAIN));
+        jlblNoGroupsHelper.setBounds(400, 353, 533, 40);
 
         JLabel jlblNoGroupsWarranty = new JLabel("Выберите один из трех вариантов");
-        jlblNoGroupsWarranty.setFont(getCourierFont(24, Font.PLAIN));
-        jlblNoGroupsWarranty.setBounds(800, 570, 800, 60);
+        jlblNoGroupsWarranty.setFont(getCourierFont(16, Font.PLAIN));
+        jlblNoGroupsWarranty.setBounds(533, 380, 533, 40);
 
-        JButton jbtOpenFolder = new JButton("Открыть папку с файлами");
-        jbtOpenFolder.setSize(400, 80);
+        JButton jbtOpenFolder = new JButton("Открыть папку");
+        jbtOpenFolder.setSize(267, 53);
         jbtOpenFolder.setFocusPainted(false);
-        jbtOpenFolder.setBounds(250, 650, 400, 80);
-        jbtOpenFolder.setFont(getCourierFont(30, Font.PLAIN));
+        jbtOpenFolder.setBounds(167, 433, 267, 53);
+        jbtOpenFolder.setFont(getCourierFont(20, Font.PLAIN));
         jbtOpenFolder.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
@@ -789,10 +789,10 @@ public class MainWindow extends JFrame {
         });
 
         JButton jbtOpenFile = new JButton("Открыть файл");
-        jbtOpenFile.setSize(300, 40);
+        jbtOpenFile.setSize(267, 53);
         jbtOpenFile.setFocusPainted(false);
-        jbtOpenFile.setBounds(750, 650, 400, 80);
-        jbtOpenFile.setFont(getCourierFont(30, Font.PLAIN));
+        jbtOpenFile.setBounds(500, 433, 267, 53);
+        jbtOpenFile.setFont(getCourierFont(20, Font.PLAIN));
         jbtOpenFile.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
@@ -823,10 +823,10 @@ public class MainWindow extends JFrame {
         });
 
         JButton jbtOpenHelpAboutFile = new JButton("Помощь");
-        jbtOpenHelpAboutFile.setSize(400, 80);
+        jbtOpenHelpAboutFile.setSize(267, 53);
         jbtOpenHelpAboutFile.setFocusPainted(false);
-        jbtOpenHelpAboutFile.setBounds(1250, 650, 400, 80);
-        jbtOpenHelpAboutFile.setFont(getCourierFont(30, Font.PLAIN));
+        jbtOpenHelpAboutFile.setBounds(833, 433, 267, 53);
+        jbtOpenHelpAboutFile.setFont(getCourierFont(20, Font.PLAIN));
         jbtOpenHelpAboutFile.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
@@ -1002,23 +1002,23 @@ public class MainWindow extends JFrame {
         }
         jtblStudents.setAutoCreateRowSorter(true);
         jtblStudents.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        jtblStudents.setPreferredScrollableViewportSize(new Dimension(855, 820));
-        jtblStudents.setFont(getCourierFont(20, Font.PLAIN));
-        jtblStudents.setRowHeight(50);
+        jtblStudents.setPreferredScrollableViewportSize(new Dimension(560, 547));
+        jtblStudents.setFont(getCourierFont(15, Font.PLAIN));
+        jtblStudents.setRowHeight(33);
 
         DefaultTableCellRenderer center = new DefaultTableCellRenderer();
         center.setHorizontalAlignment(JLabel.CENTER);
 
-        jtblStudents.getColumnModel().getColumn(0).setPreferredWidth(30);
-        jtblStudents.getColumnModel().getColumn(1).setPreferredWidth(350);
-        jtblStudents.getColumnModel().getColumn(2).setPreferredWidth(130);
+        jtblStudents.getColumnModel().getColumn(0).setPreferredWidth(25);
+        jtblStudents.getColumnModel().getColumn(1).setPreferredWidth(260);
+        jtblStudents.getColumnModel().getColumn(2).setPreferredWidth(100);
         if (isAttendance) {
             jtblStudents.getColumnModel().getColumn(3).setPreferredWidth(120);
             jtblStudents.getColumnModel().getColumn(3).setCellRenderer(center);
         }
         if (!isAttendance) {
             for (int i = 0; i < currentlyGroup.getStudents().get(0).getPassedOrFailedLab().size(); i++) {
-                jtblStudents.getColumnModel().getColumn(3 + i).setPreferredWidth(180);
+                jtblStudents.getColumnModel().getColumn(3 + i).setPreferredWidth(165);
             }
         }
 
@@ -1030,7 +1030,7 @@ public class MainWindow extends JFrame {
         jScrPaneStudents.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrPaneStudents.setMaximumSize(jScrPaneStudents.getSize());
         jScrPaneStudents.setMinimumSize(jScrPaneStudents.getSize());
-        jScrPaneStudents.setBounds(0, 0, 855, 820);
+        jScrPaneStudents.setBounds(0, 0, 560, 547);
         jpnlStudentsTable.removeAll();
         jpnlStudentsTable.add(jScrPaneStudents);
         jpnlStudentsTable.repaint();
@@ -1162,12 +1162,12 @@ public class MainWindow extends JFrame {
         jpnlAddDateToLab.removeAll();
 
         JLabel jlblAddNewDateToSubject = new JLabel("Добавление даты занятия");
-        jlblAddNewDateToSubject.setBounds(20, 40, 300, 30);
-        jlblAddNewDateToSubject.setFont(getCourierFont(20, Font.PLAIN));
+        jlblAddNewDateToSubject.setBounds(15, 27, 200, 20);
+        jlblAddNewDateToSubject.setFont(getCourierFont(14, Font.PLAIN));
 
         JDatePickerImpl calendar = createDatePicker();
-        calendar.setSize(300, 30);
-        calendar.setBounds(20, 80, 300, 30);
+        calendar.setSize(200, 30);
+        calendar.setBounds(15, 53, 200, 30);
 
         calendar.addActionListener(new ActionListener() {
             /**
@@ -1178,8 +1178,8 @@ public class MainWindow extends JFrame {
             }
         });
         JButton jbtAddDateToLab = new JButton("Добавить дату занятия");
-        jbtAddDateToLab.setBounds(20, 120, 300, 60);
-        jbtAddDateToLab.setFont(getCourierFont(20, Font.PLAIN));
+        jbtAddDateToLab.setBounds(15, 90, 200, 40);
+        jbtAddDateToLab.setFont(getCourierFont(15, Font.PLAIN));
         jbtAddDateToLab.setFocusPainted(false);
         jbtAddDateToLab.addActionListener(new ActionListener() {
             /**
@@ -1209,19 +1209,19 @@ public class MainWindow extends JFrame {
         });
         if (currentlyGroup != null && currentlyGroupId != null && !currentlyGroup.getStudents().get(0).getAttendanceOfStudent().isEmpty()) {
             JLabel deleteDateOfSubject = new JLabel("Удаление даты занятия");
-            deleteDateOfSubject.setFont(getCourierFont(20, Font.PLAIN));
-            deleteDateOfSubject.setBounds(20, 200, 300, 30);
+            deleteDateOfSubject.setFont(getCourierFont(15, Font.PLAIN));
+            deleteDateOfSubject.setBounds(15, 133, 200, 20);
 
             String[] listDates = getStringDateList();
             if (listDates != null) {
                 JComboBox<String> jComboBoxListDates = new JComboBox<>(listDates);
-                jComboBoxListDates.setBounds(20, 250, 300, 50);
-                jComboBoxListDates.setFont(getCourierFont(20, Font.BOLD));
+                jComboBoxListDates.setBounds(15, 167, 200, 33);
+                jComboBoxListDates.setFont(getCourierFont(14, Font.BOLD));
                 jComboBoxListDates.setSelectedItem(null);
 
                 JButton jbtDeleteDatToLab = new JButton("Удалить дату занятия");
-                jbtDeleteDatToLab.setFont(getCourierFont(20, Font.PLAIN));
-                jbtDeleteDatToLab.setBounds(20, 330, 300, 60);
+                jbtDeleteDatToLab.setFont(getCourierFont(14, Font.PLAIN));
+                jbtDeleteDatToLab.setBounds(15, 220, 200, 40);
                 jbtDeleteDatToLab.setFocusPainted(false);
                 jbtDeleteDatToLab.addActionListener(new ActionListener() {
                     /**
@@ -1249,13 +1249,13 @@ public class MainWindow extends JFrame {
         }
 
         JLabel jlblAddLabToGroup = new JLabel("Добавление лабораторной");
-        jlblAddLabToGroup.setFont(getCourierFont(20, Font.PLAIN));
-        jlblAddLabToGroup.setBounds(520, 40, 300, 30);
+        jlblAddLabToGroup.setFont(getCourierFont(15, Font.PLAIN));
+        jlblAddLabToGroup.setBounds(347, 27, 200, 20);
 
         JButton jbtAddLabToGroup = new JButton("Добавить лабораторную");
         jbtAddLabToGroup.setFocusPainted(false);
-        jbtAddLabToGroup.setFont(getCourierFont(20, Font.PLAIN));
-        jbtAddLabToGroup.setBounds(520, 120, 300, 60);
+        jbtAddLabToGroup.setFont(getCourierFont(12, Font.PLAIN));
+        jbtAddLabToGroup.setBounds(347, 80, 200, 40);
         jbtAddLabToGroup.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
@@ -1274,21 +1274,21 @@ public class MainWindow extends JFrame {
 
         if (currentlyGroup != null && currentlyGroupId != null && !currentlyGroup.getStudents().get(0).getPassedOrFailedLab().isEmpty()) {
             JLabel jlblDeleteLabToGroup = new JLabel("Удаление лабораторной работы");
-            jlblDeleteLabToGroup.setFont(getCourierFont(20, Font.PLAIN));
-            jlblDeleteLabToGroup.setBounds(520, 200, 300, 30);
+            jlblDeleteLabToGroup.setFont(getCourierFont(12, Font.PLAIN));
+            jlblDeleteLabToGroup.setBounds(347, 133, 200, 20);
 
             String[] listLabs = getStingKeysOfLabs();
             if (listLabs != null) {
                 JComboBox<String> jComboBoxListLabs = new JComboBox<>(listLabs);
-                jComboBoxListLabs.setFont(getCourierFont(20, Font.PLAIN));
-                jComboBoxListLabs.setBounds(520, 250, 300, 50);
+                jComboBoxListLabs.setFont(getCourierFont(14, Font.PLAIN));
+                jComboBoxListLabs.setBounds(347, 167, 200, 33);
                 jComboBoxListLabs.setSelectedItem(null);
 
 
                 JButton jbtDeleteLabToGroup = new JButton("Удалить лабораторную");
                 jbtDeleteLabToGroup.setFocusPainted(false);
-                jbtDeleteLabToGroup.setFont(getCourierFont(20, Font.PLAIN));
-                jbtDeleteLabToGroup.setBounds(520, 330, 300, 60);
+                jbtDeleteLabToGroup.setFont(getCourierFont(15, Font.PLAIN));
+                jbtDeleteLabToGroup.setBounds(347, 220, 200, 40);
                 jbtDeleteLabToGroup.addActionListener(new ActionListener() {
                     /**
                      * Invoked when an action occurs.
@@ -1333,9 +1333,9 @@ public class MainWindow extends JFrame {
         String[] listDates = getStringDateList();
         if (listDates != null) {
             JList<String> listOfDates = new JList<>(listDates);
-            listOfDates.setFont(getCourierFont(20, Font.PLAIN));
+            listOfDates.setFont(getCourierFont(15, Font.PLAIN));
             JScrollPane jScrollPane = new JScrollPane(listOfDates, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            jScrollPane.setBounds(350, 40, 150, 400);
+            jScrollPane.setBounds(233, 27, 100, 267);
             jScrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
             jpnlAddDateToLab.add(jScrollPane);
         }
@@ -1376,6 +1376,8 @@ public class MainWindow extends JFrame {
             return result;
         }
     }
+
+    public static void main(String[] args) throws IOException, ParseException, InvalidFormatException {
+        MainWindow a = new MainWindow();
+    }
 }
-
-

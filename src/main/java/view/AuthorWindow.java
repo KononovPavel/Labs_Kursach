@@ -32,7 +32,7 @@ public class AuthorWindow extends JFrame {
 
 
     private Font getCourierFont(int fontSize, int fontType) {
-        return new Font("Courier", fontType, fontSize);
+        return new Font("Arial", fontType, fontSize);
     }
 
     /**
@@ -44,47 +44,47 @@ public class AuthorWindow extends JFrame {
         JPanel jPanel = new JPanel(null);
         JPanel jpnlContactInfo = new JPanel(null);
 
-        jbtBackImageTo = imageConverter.scaleImage("images/back.png", 30, 30);
+        jbtBackImageTo = imageConverter.scaleImage("images/back.png", 24, 24);
 
-        jlblAuthorPhoto = new JLabel(imageConverter.scaleImage("images/author.jpg", 350, 350));
-        jlblAuthorPhoto.setBounds(75,50,350,350);
+        jlblAuthorPhoto = new JLabel(imageConverter.scaleImage("images/author.jpg", 280, 280));
+        jlblAuthorPhoto.setBounds(60,40,280,280);
 
         jlblAuthorName = new JLabel("Кононов Павел Валерьевич");
-        jlblAuthorName.setFont(getCourierFont(24,Font.PLAIN));
-        jlblAuthorName.setBounds(75, 450,400,50);
+        jlblAuthorName.setFont(getCourierFont(20,Font.PLAIN));
+        jlblAuthorName.setBounds(60, 360,300,40);
 
         jlblAuthorGroup = new JLabel("Студент группы 10702419");
-        jlblAuthorGroup.setFont(getCourierFont(24, Font.PLAIN));
-        jlblAuthorGroup.setBounds(75, 480,400,50);
+        jlblAuthorGroup.setFont(getCourierFont(20, Font.PLAIN));
+        jlblAuthorGroup.setBounds(60, 384,400,40);
 
 
-        jpnlContactInfo.setSize(600,200);
+        jpnlContactInfo.setSize(480,160);
         jpnlContactInfo.setBackground(Color.getHSBColor(2, 250, 7));
-        jpnlContactInfo.setBounds(75, 550, 400, 100);
+        jpnlContactInfo.setBounds(50, 440, 400, 80);
 
         jlblEmailImage = new JLabel(imageConverter.scaleImage("images/email.png", 30, 30));
-        jlblEmailImage.setBounds(0,0,30,30);
+        jlblEmailImage.setBounds(0,0,24,24);
 
 
         jlblEmail = new JLabel("pavel.konanau@netcracker.com");
-        jlblEmail.setFont(getCourierFont(24, Font.PLAIN));
-        jlblEmail.setBounds(50,0,500,30);
+        jlblEmail.setFont(getCourierFont(20, Font.PLAIN));
+        jlblEmail.setBounds(40,0,400,24);
 
         jlblPhoneImage = new JLabel(imageConverter.scaleImage("images/phone.png", 30, 30));
-        jlblPhoneImage.setBounds(0, 40, 30,30);
+        jlblPhoneImage.setBounds(0, 30, 24,24);
 
         jlblPhone = new JLabel("+375(29)181-16-55");
-        jlblPhone.setFont(getCourierFont(24,Font.PLAIN));
-        jlblPhone.setBounds(50,40,400,30);
+        jlblPhone.setFont(getCourierFont(20,Font.PLAIN));
+        jlblPhone.setBounds(40,30,300,24);
 
 
 
         jbtBack = new JButton("ВЕРНУТЬСЯ ОБРАТНО");
         jbtBack.setFocusPainted(false);
-        jbtBack.setSize(400,60);
-        jbtBack.setFont(getCourierFont(24, Font.PLAIN));
+        jbtBack.setSize(300,48);
+        jbtBack.setFont(getCourierFont(20, Font.PLAIN));
         jbtBack.setBackground(Color.getHSBColor(250, 2, 101));
-        jbtBack.setBounds(50, sizeY - 60 - 50, 400, 60);
+        jbtBack.setBounds(40, 526, 300, 48);
         jbtBack.setIcon(jbtBackImageTo);
         jbtBack.addActionListener(new ActionListener() {
             @SneakyThrows
@@ -111,7 +111,7 @@ public class AuthorWindow extends JFrame {
         jPanel.setBackground(Color.getHSBColor(2, 250, 7));
 
         add(jPanel);
-        setSize(sizeX, sizeY);
+        setSize(400, 630);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);

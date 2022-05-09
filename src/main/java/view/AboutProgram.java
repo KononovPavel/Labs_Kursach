@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 
 /**
- *<p>Класс представления</p>
+ * <p>Класс представления</p>
  * <p>Класс, создающий окно "О программе", которое показывает пользователю,
  * что умеет программа</p>
  *
@@ -42,7 +42,7 @@ public class AboutProgram extends JFrame {
     private static final int sizeY = 768;
 
     private Font getCourierFont(int fontSize, int fontType) {
-        return new Font("Courier", fontType, fontSize);
+        return new Font("Arial", fontType, fontSize);
     }
 
     /**
@@ -55,55 +55,55 @@ public class AboutProgram extends JFrame {
 
 
         jpnlInfo = new JPanel(null);
-        jpnlInfo.setBounds(0,150,sizeX,450);
+        jpnlInfo.setBounds(0,120,820,360);
 
 
         jpnlAboutProgram.setBackground(Color.getHSBColor(2, 250, 7));
 
         jlblTitle = new JLabel("Успеваемость на лабораторных занятиях");
-        jlblTitle.setFont(getCourierFont(30, Font.CENTER_BASELINE));
-        jlblTitle.setBounds(200,35, sizeX,40);
+        jlblTitle.setFont(getCourierFont(24, Font.CENTER_BASELINE));
+        jlblTitle.setBounds(160,28, 820,32);
 
         jlblPossibilityOfProgram = new JLabel("Программа позволяет");
-        jlblPossibilityOfProgram.setFont(getCourierFont(24, Font.BOLD));
-        jlblPossibilityOfProgram.setBounds(350, 110, sizeX, 30);
+        jlblPossibilityOfProgram.setFont(getCourierFont(20, Font.BOLD));
+        jlblPossibilityOfProgram.setBounds(280, 88, 820, 24);
 
         //------------------Информация о программе -------------------//
 
-        jlblStudentsImage = new JLabel(imageConverter.scaleImage("images/students.png", 80,80));
-        jlblStudentsImage.setBounds(40,20, 80,80);
+        jlblStudentsImage = new JLabel(imageConverter.scaleImage("images/students.png", 64,64));
+        jlblStudentsImage.setBounds(30,16, 64,64);
 
-        jlblExcelImage = new JLabel(imageConverter.scaleImage("images/excel.png",80,80));
-        jlblExcelImage.setBounds(40,110, 80,80);
+        jlblExcelImage = new JLabel(imageConverter.scaleImage("images/excel.png",64,64));
+        jlblExcelImage.setBounds(30,88, 64,64);
 
-        jlblTableImage = new JLabel(imageConverter.scaleImage("images/table.png",80,80));
-        jlblTableImage.setBounds(40,200, 80,80);
+        jlblTableImage = new JLabel(imageConverter.scaleImage("images/table.png",64,64));
+        jlblTableImage.setBounds(30,160, 64,64);
 
-        jlblCheckedUnCheckedImage = new JLabel(imageConverter.scaleImage("images/checkedUnChecked.png",80,80));
-        jlblCheckedUnCheckedImage.setBounds(40,290, 80,80);
+        jlblCheckedUnCheckedImage = new JLabel(imageConverter.scaleImage("images/checkedUnChecked.png",64,64));
+        jlblCheckedUnCheckedImage.setBounds(30,232, 64,64);
 
-        jlblSortImage = new JLabel(imageConverter.scaleImage("images/sort.png",80,80));
-        jlblSortImage.setBounds(40,370, 80,80);
+        jlblSortImage = new JLabel(imageConverter.scaleImage("images/sort.png",64,64));
+        jlblSortImage.setBounds(30,296, 64,64);
 
         jlblStudents = new JLabel("Получать списки студентов из файла и работать с ними.");
-        jlblStudents.setFont(getCourierFont(24,Font.PLAIN));
-        jlblStudents.setBounds(150,50, sizeX, 30);
+        jlblStudents.setFont(getCourierFont(20,Font.PLAIN));
+        jlblStudents.setBounds(120,40, 820, 24);
 
         jlblExcel = new JLabel("Сохранять результат лабораторных работ в excel файлы.");
-        jlblExcel.setFont(getCourierFont(24,Font.PLAIN));
-        jlblExcel.setBounds(150,140, sizeX, 30);
+        jlblExcel.setFont(getCourierFont(20,Font.PLAIN));
+        jlblExcel.setBounds(120,110, 820, 24);
 
         jlblTable = new JLabel("Работать в привычной форме - в виде таблицы данных.");
-        jlblTable.setFont(getCourierFont(24,Font.PLAIN));
-        jlblTable.setBounds(150,230, sizeX, 30);
+        jlblTable.setFont(getCourierFont(20,Font.PLAIN));
+        jlblTable.setBounds(120,184, 820, 24);
 
         jlblCheckedUnChecked = new JLabel("Отмечать сдачу лабораторных работ и присутствие студентов на них.");
-        jlblCheckedUnChecked.setFont(getCourierFont(24,Font.PLAIN));
-        jlblCheckedUnChecked.setBounds(150,320, sizeX, 30);
+        jlblCheckedUnChecked.setFont(getCourierFont(20,Font.PLAIN));
+        jlblCheckedUnChecked.setBounds(120,256, 820, 24);
 
         jlblSort = new JLabel("Сортировать студентов по посещениям, кол-ву сданных лабораторных");
-        jlblSort.setFont(getCourierFont(24,Font.PLAIN));
-        jlblSort.setBounds(150,390, sizeX, 30);
+        jlblSort.setFont(getCourierFont(20,Font.PLAIN));
+        jlblSort.setBounds(120,312, 820, 24);
 
 
 
@@ -121,10 +121,10 @@ public class AboutProgram extends JFrame {
         jpnlInfo.add(jlblTable);
 
         jbtBackToMainWindow = new JButton("Назад");
-        jbtBackToMainWindow.setSize(400,60);
+        jbtBackToMainWindow.setSize(300,48);
         jbtBackToMainWindow.setFocusPainted(false);
-        jbtBackToMainWindow.setFont(getCourierFont(30,Font.PLAIN));
-        jbtBackToMainWindow.setBounds(560, 650, 400, 60);
+        jbtBackToMainWindow.setFont(getCourierFont(24,Font.PLAIN));
+        jbtBackToMainWindow.setBounds(448, 520, 300, 48);
         jbtBackToMainWindow.setBackground(Color.getHSBColor(250, 2, 101));
         jbtBackToMainWindow.addActionListener(new ActionListener() {
             @SneakyThrows
@@ -143,7 +143,7 @@ public class AboutProgram extends JFrame {
 
 
         add(jpnlAboutProgram);
-        setSize(sizeX, sizeY);
+        setSize(820, 615);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         setLocationRelativeTo(null);

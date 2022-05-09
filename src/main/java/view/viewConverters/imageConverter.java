@@ -5,5 +5,5 @@ import java.io.IOException;
 
 public interface imageConverter {
 
-   public ImageIcon scaleImage(String path, int sizeX, int sizeY) throws IOException;
+   public ImageIcon scaleImage(String path, double sizeX, double sizeY) throws IOException;
 }

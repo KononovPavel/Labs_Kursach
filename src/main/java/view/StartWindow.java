@@ -42,7 +42,7 @@ public class StartWindow extends JFrame {
 
 
     private Font getCourierFont(int fontSize, int fontType) {
-        return new Font("Courier", fontType, fontSize);
+        return new Font("Arial", fontType, fontSize);
     }
 
     /**
@@ -50,24 +50,23 @@ public class StartWindow extends JFrame {
      */
     public StartWindow() {
         super(TITLE_OF_WINDOW);
-        jImgImage = imageConverter.scaleImage("images/javalab.png", 400, 300);
-        jImgTimer = imageConverter.scaleImage("images/timer.png", 40, 40);
+        jImgImage = imageConverter.scaleImage("images/javalab.png", 304, 224);
+        jImgTimer = imageConverter.scaleImage("images/timer.png", 32, 32);
 
         JPanel jPanel = new JPanel(null);
         JPanel jpnlTimer = new JPanel(null);
-        /*----------Работа с таймером-----------*/
 
         jPanel.setBackground(Color.getHSBColor(2, 250, 7));
         jpnlTimer.setBackground(Color.getHSBColor(2, 250, 7));
 
         jlblTimerImage = new JLabel(jImgTimer);
-        jlblTimerImage.setBounds(15, 15, 40, 40);
+        jlblTimerImage.setBounds(12, 12, 32, 32);
 
         jlblTimer = new JLabel(String.valueOf(count));
-        jlblTimer.setFont(getCourierFont(36, Font.PLAIN));
-        jlblTimer.setBounds(80, 15, 40, 40);
+        jlblTimer.setFont(getCourierFont(28, Font.PLAIN));
+        jlblTimer.setBounds(60, 12, 32, 32);
 
-        jpnlTimer.setBounds(650, 530, 150, 70);
+        jpnlTimer.setBounds(520, 424, 120, 56);
         jpnlTimer.setBackground(Color.PINK);
         jpnlTimer.add(jlblTimerImage);
         jpnlTimer.add(jlblTimer);
@@ -84,62 +83,62 @@ public class StartWindow extends JFrame {
 
         /*------------------------------------*/
         jlblUniversity = new JLabel("БЕЛОРУССКИЙ НАЦИОНАЛЬНЫЙ ТЕХНИЧЕСКИЙ УНИВЕРСИТЕТ");
-        jlblUniversity.setFont(getCourierFont(16, Font.BOLD));
-        jlblUniversity.setBounds(220, 10, 600, 20);
+        jlblUniversity.setFont(getCourierFont(14, Font.BOLD));
+        jlblUniversity.setBounds(180, 8, 480, 16);
 
 
         jlblFaculty = new JLabel("Факультет информационных технологий и робототехники");
         jlblFaculty.setFont(getCourierFont(14, Font.PLAIN));
-        jlblFaculty.setBounds(300, 40, 600, 20);
+        jlblFaculty.setBounds(260, 32, 480, 16);
 
         jlblDepartment = new JLabel("Кафедра программного обеспечения инфоррмационых систем и технологий");
         jlblDepartment.setFont(getCourierFont(14, Font.PLAIN));
-        jlblDepartment.setBounds(250, 70, 600, 20);
+        jlblDepartment.setBounds(220, 56, 480, 16);
 
 
         jlblTitle = new JLabel("Курсовая работа");
-        jlblTitle.setFont(getCourierFont(24, Font.BOLD));
-        jlblTitle.setBounds(400, 150, 400, 40);
+        jlblTitle.setFont(getCourierFont(20, Font.BOLD));
+        jlblTitle.setBounds(310, 112, 300, 30);
 
 
         jlblDiscipline = new JLabel("По дисциплине \"Программирование на языке Java\"");
-        jlblDiscipline.setFont(getCourierFont(16, Font.BOLD));
-        jlblDiscipline.setBounds(290, 190, 500, 20);
+        jlblDiscipline.setFont(getCourierFont(12, Font.BOLD));
+        jlblDiscipline.setBounds(240, 152, 416, 16);
 
         jlblTopic = new JLabel("Успеваемость на лабораторных занятиях");
-        jlblTopic.setFont(getCourierFont(34, Font.BOLD));
-        jlblTopic.setBounds(150, 240, 800, 40);
+        jlblTopic.setFont(getCourierFont(20, Font.BOLD));
+        jlblTopic.setBounds(200, 192, 600, 32);
 
         jlblStudent = new JLabel("Выполнил: Студент группы 10702419");
-        jlblStudent.setFont(getCourierFont(20, Font.BOLD));
-        jlblStudent.setBounds(540, 350, 512, 30);
+        jlblStudent.setFont(getCourierFont(16, Font.BOLD));
+        jlblStudent.setBounds(430, 280, 410, 24);
 
         jlblStudentName = new JLabel("Кононов Павел Валерьевич");
-        jlblStudentName.setFont(getCourierFont(20, Font.ITALIC));
-        jlblStudentName.setBounds(540, 380, 512, 30);
+        jlblStudentName.setFont(getCourierFont(16, Font.ITALIC));
+        jlblStudentName.setBounds(430, 304, 410, 24);
 
         jlblTeacher = new JLabel("Преподаватель: к.ф.-м.н, доц.");
-        jlblTeacher.setFont(getCourierFont(20, Font.BOLD));
-        jlblTeacher.setBounds(540, 440, 512, 30);
+        jlblTeacher.setFont(getCourierFont(16, Font.BOLD));
+        jlblTeacher.setBounds(430, 352, 410, 24);
 
         jlblTeacherName = new JLabel("Сидорик Валерий Владимирович");
-        jlblTeacherName.setFont(getCourierFont(20, Font.ITALIC));
-        jlblTeacherName.setBounds(540, 470, 512, 30);
+        jlblTeacherName.setFont(getCourierFont(16, Font.ITALIC));
+        jlblTeacherName.setBounds(430, 376, 410, 24);
 
 
         jlblImage = new JLabel(jImgImage);
-        jlblImage.setBounds(60, 330, 400, 300);
+        jlblImage.setBounds(48, 264,300, 240);
 
         jlblCity = new JLabel("Минск 2022");
-        jlblCity.setFont(getCourierFont(20, Font.BOLD));
-        jlblCity.setBounds(460, 580, 200, 30);
+        jlblCity.setFont(getCourierFont(16, Font.BOLD));
+        jlblCity.setBounds(368, 464, 160, 24);
 
 
         jbtStartOfWork = new JButton("Далее");
         jbtStartOfWork.setFocusPainted(false);
-        jbtStartOfWork.setFont(getCourierFont(24, Font.PLAIN));
-        jbtStartOfWork.setSize(400, 60);
-        jbtStartOfWork.setBounds(60, 650, 400, 60);
+        jbtStartOfWork.setFont(getCourierFont(20, Font.PLAIN));
+        jbtStartOfWork.setSize(300, 48);
+        jbtStartOfWork.setBounds(48, 520, 300, 48);
         jbtStartOfWork.addActionListener(new ActionListener() {
             @SneakyThrows
             @Override
@@ -152,10 +151,10 @@ public class StartWindow extends JFrame {
 
         jbtExitProgram = new JButton("Выйти");
         jbtExitProgram.setFocusPainted(false);
-        jbtExitProgram.setFont(getCourierFont(24, Font.PLAIN));
+        jbtExitProgram.setFont(getCourierFont(20, Font.PLAIN));
         jbtExitProgram.setBackground(Color.getHSBColor(250, 2, 101));
-        jbtExitProgram.setSize(400, 60);
-        jbtExitProgram.setBounds(560, 650, 400, 60);
+        jbtExitProgram.setSize(300, 48);
+        jbtExitProgram.setBounds(448, 520, 300, 48);
         jbtExitProgram.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -180,7 +179,7 @@ public class StartWindow extends JFrame {
         jPanel.add(jpnlTimer);
 
         add(jPanel);
-        setSize(1024, 768);
+        setSize(820, 615);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);

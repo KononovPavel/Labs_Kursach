@@ -21,10 +21,10 @@ public class ImageConverterImpl implements imageConverter {
      * @return - новая, отмасштабированная картинка
      */
     @Override
-    public ImageIcon scaleImage(String path, int sizeX, int sizeY) {
+    public ImageIcon scaleImage(String path, double sizeX, double sizeY) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         ImageIcon icon  = new ImageIcon(Objects.requireNonNull(classLoader.getResource("resources/" + path)));
-        Image newImageIcon = icon.getImage().getScaledInstance(sizeX,sizeY,Image.SCALE_DEFAULT);
+        Image newImageIcon = icon.getImage().getScaledInstance((int)sizeX,(int)sizeY,Image.SCALE_DEFAULT);
         icon.setImage(newImageIcon);
         return icon;
     }
