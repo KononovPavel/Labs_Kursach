@@ -20,6 +20,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -37,7 +40,7 @@ public class MainWindow extends JFrame {
     private Groups groupsGeneral;
     private final JFileChooser fileChooser = new JFileChooser();
 
-    private final String defaultPathToFiles = getClass().getClassLoader().getResource("resources/files") == null ? "src/main/resources/files" : getClass().getClassLoader().getResource("resources/files").getPath();
+    private final String defaultPathToFiles = "C:/ProgramData/ExcelFilesForLaboratories";
 
     private JPanel jpnlGroups;
     private JPanel jpnlStudentsTable;
@@ -73,7 +76,7 @@ public class MainWindow extends JFrame {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private Font getCourierFont(int fontSize, int fontType) {
-        return new Font("Courier", fontType, fontSize);
+        return new Font("Arial", fontType, fontSize);
     }
 
     /**
@@ -87,6 +90,8 @@ public class MainWindow extends JFrame {
         super("Главная");
         jpnlMain = new JPanel(null);
         JMenuBar jMenuBar = new JMenuBar();
+
+        boolean folderWasCreatedFirstly = isFolderExist(defaultPathToFiles);
         groupsGeneral = fileConverter.processFilesFromFolderRecursive(new File(defaultPathToFiles));
 
         if (groupsGeneral == null) {
@@ -334,7 +339,7 @@ public class MainWindow extends JFrame {
             @SneakyThrows
             @Override
             public void actionPerformed(ActionEvent e) {
-                Group deletedGroup = groupsController.deleteGroup(String.valueOf(jComBoxTypeOfGroups.getSelectedItem()), groupsGeneral);
+                Group deletedGroup = groupsController.deleteGroup(String.valueOf(jComBoxTypeOfGroups.getSelectedItem()), groupsGeneral, defaultPathToFiles);
                 if (deletedGroup == null) {
                     JOptionPane.showMessageDialog(MainWindow.this, "Группа не была удалена", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -472,7 +477,7 @@ public class MainWindow extends JFrame {
         jpnlGroups.removeAll();
         int x = 10;
         int y = 50;
-        JLabel jlblListGroupName = new JLabel("Список групп");
+        JLabel jlblListGroupName = new JLabel("");
         jlblListGroupName.setFont(getCourierFont(20, Font.PLAIN));
         jlblListGroupName.setBounds(50, 10, 180, 40);
         for (Map.Entry<String, Group> groupEntry : groups.entrySet()) {
@@ -1375,6 +1380,19 @@ public class MainWindow extends JFrame {
             }
             return result;
         }
+    }
+    private boolean isFolderExist(String folderPath) throws IOException {
+        Path path = Paths.get(folderPath);
+        if (!Files.exists(path)) {
+            Files.createDirectory(path);
+            return true;
+        } else {
+           return false;
+        }
+    }
+
+    public static void main(String[] args) throws IOException, ParseException, InvalidFormatException {
+        MainWindow a = new MainWindow();
     }
 }
 

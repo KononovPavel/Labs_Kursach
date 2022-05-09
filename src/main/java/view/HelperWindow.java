@@ -22,16 +22,14 @@ public class HelperWindow extends JFrame {
     private JLabel jlblLeftArrowImg = new JLabel(imageConverter.scaleImage("images/strelka_to_change_plane_left.png", 30, 30));
     private JLabel jlblRightArrowImg = new JLabel(imageConverter.scaleImage("images/strelka_to_change_plane.png", 30, 30));
     JLabel jlblAboutFirstPageImg = new JLabel();
-    private final int leftArrowPositionX = 40;
-    private final int leftArrowPositionY = 430;
-    private final int rightArrowPositionX = 1320;
-    private final int rightArrowPositionY = 430;
-    private final int scaleX = 1200;
-    private final int scaleY = 623;
+    private final int leftArrowPositionX = 50;
+    private final int leftArrowPositionY = 220;
+    private final int rightArrowPositionX = 780;
+    private final int rightArrowPositionY = 220;
 
 
     private Font getCourierFont(int fontSize, int fontType) {
-        return new Font("Courier", fontType, fontSize);
+        return new Font("Arial", fontType, fontSize);
     }
 
     /**
@@ -40,10 +38,9 @@ public class HelperWindow extends JFrame {
     public HelperWindow(){
         super("Помощь");
         jpnlHelper.setBackground(Color.getHSBColor(2, 250, 7));
-
         setFirstStepHelper();
         add(jpnlHelper);
-        setSize(1400, 900);
+        setSize(900, 500);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -51,7 +48,7 @@ public class HelperWindow extends JFrame {
 
     private void setFirstStepHelper(){
         jpnlHelper.removeAll();
-        jlblRightArrowImg.setBounds(rightArrowPositionX, rightArrowPositionY, 40, 40);
+        jlblRightArrowImg.setBounds(rightArrowPositionX, rightArrowPositionY, 32, 32);
         jlblLeftArrowImg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jlblRightArrowImg.addMouseListener(new MouseAdapter() {
             @SneakyThrows
@@ -61,23 +58,23 @@ public class HelperWindow extends JFrame {
             }
         });
 
-        jlblAboutFirstPageImg.setIcon(imageConverter.scaleImage("helperImages/aboutFirstPage.png", scaleX, scaleY));
+        jlblAboutFirstPageImg.setIcon(imageConverter.scaleImage("helperImages/aboutFirstPage.png", 600, 300));
         JLabel jlblFirstNote = new JLabel("1. Можете выбрать папку для файлов, чтобы загрузить их");
         JLabel jlblSecondNote = new JLabel("2. Можете выбрать 1 файл, чтобы начать работать с программой");
         JLabel jlblThirdNote = new JLabel("3. Нажмите сюда, чтобы получить помощь");
 
-        jlblFirstNote.setFont(getCourierFont(20,Font.PLAIN));
-        jlblFirstNote.setBounds(80, 900 - 130, 1000, 20);
+        jlblFirstNote.setFont(getCourierFont(16,Font.PLAIN));
+        jlblFirstNote.setBounds(130, 370, 500, 16);
 
-        jlblSecondNote.setFont(getCourierFont(20,Font.PLAIN));
-        jlblSecondNote.setBounds(80, 900 - 100, 1000, 20);
-
-
-        jlblThirdNote.setFont(getCourierFont(20,Font.PLAIN));
-        jlblThirdNote.setBounds(80, 900 - 70, 1000, 20);
+        jlblSecondNote.setFont(getCourierFont(16,Font.PLAIN));
+        jlblSecondNote.setBounds(130, 400, 500, 16);
 
 
-        jlblAboutFirstPageImg.setBounds(80, 60, scaleX, scaleY);
+        jlblThirdNote.setFont(getCourierFont(16,Font.PLAIN));
+        jlblThirdNote.setBounds(130, 430, 500, 16);
+
+
+        jlblAboutFirstPageImg.setBounds(130, 50, 600, 300);
         jpnlHelper.add(jlblRightArrowImg);
         jpnlHelper.add(jlblAboutFirstPageImg);
         jpnlHelper.add(jlblFirstNote);
@@ -88,7 +85,7 @@ public class HelperWindow extends JFrame {
 
     private void setSecondStepHelper(){
         jpnlHelper.removeAll();
-        jlblRightArrowImg.setBounds(rightArrowPositionX, rightArrowPositionY, 40, 40);
+        jlblRightArrowImg.setBounds(rightArrowPositionX, rightArrowPositionY, 32, 32);
         jlblRightArrowImg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jlblRightArrowImg.addMouseListener(new MouseAdapter() {
             @SneakyThrows
@@ -98,7 +95,7 @@ public class HelperWindow extends JFrame {
             }
         });
 
-        jlblLeftArrowImg.setBounds(leftArrowPositionX, leftArrowPositionY, 40, 40);
+        jlblLeftArrowImg.setBounds(leftArrowPositionX, leftArrowPositionY, 32, 32);
         jlblLeftArrowImg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jlblLeftArrowImg.addMouseListener(new MouseAdapter() {
             @SneakyThrows
@@ -108,24 +105,24 @@ public class HelperWindow extends JFrame {
             }
         });
 
-        jlblAboutFirstPageImg.setIcon(imageConverter.scaleImage("helperImages/excel_1.png", 438, 235));
+        jlblAboutFirstPageImg.setIcon(imageConverter.scaleImage("helperImages/excel_1.png", 650, 270));
         JLabel jlblFirstNote = new JLabel("Пожалуйста, убедитесь что у вас правильно заполненные поля");
         JLabel jlblSecondNote = new JLabel("Обратите внимание, что не должно быть ничего лишнего");
         JLabel jlblThirdNote = new JLabel("Не нужно придумывать что новое");
 
 
-        jlblFirstNote.setFont(getCourierFont(20,Font.PLAIN));
-        jlblFirstNote.setBounds(450, 900 - 230, 1000, 20);
+        jlblFirstNote.setFont(getCourierFont(16,Font.PLAIN));
+        jlblFirstNote.setBounds(200, 340, 800, 16);
 
-        jlblSecondNote.setFont(getCourierFont(20,Font.PLAIN));
-        jlblSecondNote.setBounds(450, 900 - 200, 1000, 20);
-
-
-        jlblThirdNote.setFont(getCourierFont(20,Font.PLAIN));
-        jlblThirdNote.setBounds(450, 900 - 170, 1000, 20);
+        jlblSecondNote.setFont(getCourierFont(16,Font.PLAIN));
+        jlblSecondNote.setBounds(200, 370, 800, 16);
 
 
-        jlblAboutFirstPageImg.setBounds(450, 200, 438, 235);
+        jlblThirdNote.setFont(getCourierFont(16,Font.PLAIN));
+        jlblThirdNote.setBounds(200, 400, 800, 16);
+
+
+        jlblAboutFirstPageImg.setBounds(100, 40, 650, 270);
 
         jpnlHelper.add(jlblFirstNote);
         jpnlHelper.add(jlblSecondNote);
@@ -149,22 +146,22 @@ public class HelperWindow extends JFrame {
             }
         });
 
-        jlblAboutFirstPageImg.setIcon(imageConverter.scaleImage("helperImages/stringFormat_excel.png", 711, 723));
+        jlblAboutFirstPageImg.setIcon(imageConverter.scaleImage("helperImages/stringFormat_excel.png", 550, 300));
         JLabel jlblFirstNote = new JLabel("1. Убедитесь, что у вас тип ячеек выставлен правильно");
-        JLabel jlblSecondNote = new JLabel("2. Тип всех ячеек должен быть 'General'");
-        JLabel jlblThirdNote = new JLabel("3.Не заполняйте даты, если не знаете как, загрузите лучше файл в программу, так будет корректнее");
+        JLabel jlblSecondNote = new JLabel("2. Тип всех ячеек должен быть 'TEXT'");
+        JLabel jlblThirdNote = new JLabel("3. Не заполняйте даты, если не знаете как, загрузите лучше файл в программу, так будет корректнее");
 
 
-        jlblAboutFirstPageImg.setBounds(400, 125, scaleX, scaleY);
-        jlblFirstNote.setFont(getCourierFont(20,Font.PLAIN));
-        jlblFirstNote.setBounds(80, 900 - 130, 1000, 20);
+        jlblAboutFirstPageImg.setBounds(200, 40, 550,300);
+        jlblFirstNote.setFont(getCourierFont(16, Font.PLAIN));
+        jlblFirstNote.setBounds(100, 370, 800, 16);
 
-        jlblSecondNote.setFont(getCourierFont(20,Font.PLAIN));
-        jlblSecondNote.setBounds(80, 900 - 100, 1000, 20);
+        jlblSecondNote.setFont(getCourierFont(16,Font.PLAIN));
+        jlblSecondNote.setBounds(100, 400, 800, 16);
 
 
-        jlblThirdNote.setFont(getCourierFont(20,Font.PLAIN));
-        jlblThirdNote.setBounds(80, 900 - 70, 1000, 20);
+        jlblThirdNote.setFont(getCourierFont(16,Font.PLAIN));
+        jlblThirdNote.setBounds(100, 430, 800, 16);
 
         jpnlHelper.add(jlblLeftArrowImg);
         jpnlHelper.add(jlblAboutFirstPageImg);

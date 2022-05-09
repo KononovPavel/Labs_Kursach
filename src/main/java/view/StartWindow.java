@@ -42,7 +42,7 @@ public class StartWindow extends JFrame {
 
 
     private Font getCourierFont(int fontSize, int fontType) {
-        return new Font("Courier", fontType, fontSize);
+        return new Font("Arial", fontType, fontSize);
     }
 
     /**
@@ -64,7 +64,7 @@ public class StartWindow extends JFrame {
         jlblTimerImage.setBounds(15, 15, 40, 40);
 
         jlblTimer = new JLabel(String.valueOf(count));
-        jlblTimer.setFont(getCourierFont(36, Font.PLAIN));
+        jlblTimer.setFont(getCourierFont(20, Font.PLAIN));
         jlblTimer.setBounds(80, 15, 40, 40);
 
         jpnlTimer.setBounds(650, 530, 150, 70);

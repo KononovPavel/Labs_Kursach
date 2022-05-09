@@ -61,6 +61,9 @@ public class FileConverterImpl implements FileConverter {
                     groups.getGroups().put(group.getGroupId(), group);
                 }
             }
+            if (groups.getGroups().isEmpty()) {
+                return null;
+            }
             return groups;
         } else {
             return null;
@@ -71,10 +74,10 @@ public class FileConverterImpl implements FileConverter {
      * Метод, создающий excel файл одной группы
      * Наполняет файл данными и сохраняет его по выбранному пути
      *
-     * @param group - группа
-     * @param path - путь для сохранения файла
+     * @param group              - группа
+     * @param path               - путь для сохранения файла
      * @param isNeedToCreatePath - флаг, для правильного установления пути
-     * @throws IOException - error
+     * @throws IOException    - error
      * @throws ParseException - error
      */
     @Override
@@ -88,7 +91,7 @@ public class FileConverterImpl implements FileConverter {
         XSSFCell cell;
 
         setFirstRow(row, group);
-        spreadsheet.setColumnWidth(0,8000);
+        spreadsheet.setColumnWidth(0, 8000);
         FileOutputStream out;
         if (isNeedToCreatePath) {
             out = new FileOutputStream(path + "/" + group.getGroupId() + ".xls");
@@ -104,7 +107,7 @@ public class FileConverterImpl implements FileConverter {
             if (!student.getAttendanceOfStudent().isEmpty()) {
                 for (Map.Entry<Date, Boolean> entry : student.getAttendanceOfStudent().entrySet()) {
                     cellCount++;
-                    spreadsheet.setColumnWidth(cellCount,2700);
+                    spreadsheet.setColumnWidth(cellCount, 2700);
                     cell = row.createCell(cellCount);
                     cell.setCellType(CellType.STRING);
                     cell.setCellValue(getAttendanceForTableByStudentAttendance(entry.getValue()));
@@ -114,7 +117,7 @@ public class FileConverterImpl implements FileConverter {
             if (!student.getPassedOrFailedLab().isEmpty()) {
                 for (Map.Entry<String, Boolean> entry : student.getPassedOrFailedLab().entrySet()) {
                     cellCount++;
-                    spreadsheet.setColumnWidth(cellCount,6000);
+                    spreadsheet.setColumnWidth(cellCount, 6000);
                     cell = row.createCell(cellCount);
                     cell.setCellType(CellType.STRING);
                     cell.setCellValue(getPassedOrFailedLabForTableByStudents(entry.getValue()));
@@ -128,7 +131,8 @@ public class FileConverterImpl implements FileConverter {
 
     /**
      * Метод, созданный для заполнения первой строчки excel файла
-     * @param row - колонка
+     *
+     * @param row   - колонка
      * @param group - группа
      */
     @Override
@@ -163,6 +167,7 @@ public class FileConverterImpl implements FileConverter {
 
     /**
      * Конвертер набора дат в коллекцию дат
+     *
      * @param dates - Набор дат
      * @return коллекцию дат
      */
@@ -173,6 +178,7 @@ public class FileConverterImpl implements FileConverter {
 
     /**
      * Сортировка списка дат
+     *
      * @param dates - список дат
      * @return отсортированный список дат
      */
@@ -186,94 +192,99 @@ public class FileConverterImpl implements FileConverter {
     /**
      * Метод, который достает данные из файла и создает группу студентов
      *
-     * @param path - путь к файлу
+     * @param path   - путь к файлу
      * @param groups - группы
      * @return группу
-     * @throws IOException - error
-     * @throws ParseException - error
+     * @throws IOException            - error
+     * @throws ParseException         - error
      * @throws InvalidFormatException - error
      */
     @Override
     public Group getGroupByFile(String path, Groups groups) throws IOException, ParseException, InvalidFormatException {
-        GroupsControllerImpl groupsController = new GroupsControllerImpl();
-        StudentConverterImpl studentConverter = new StudentConverterImpl();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        FileInputStream inputStream = new FileInputStream(path);
-        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-        XSSFSheet sheet = workbook.getSheetAt(0);
-        if (sheet == null) {
-            return null;
-        }
-        int row = 0;
-        int cell = 0;
-        int dateRow = 0;
-        int labsRow = 0;
-        String[] filePath = path.replace("\\", "/").split("/");
-        String groupId = filePath[filePath.length - 1].replace(".xls", "");
-        List<Student> studentList = new ArrayList<>();
-        Group group = groupsController.createGroup(groupId, groups, studentList);
-        if (group == null) {
-            return null;
-        }
-        while (true) {
-            row += 1;
-            if (sheet.getRow(row) == null || sheet.getRow(row).getCell(cell) == null || sheet.getRow(row).getCell(cell).getStringCellValue() == null) {
-                break;
+        try {
+            GroupsControllerImpl groupsController = new GroupsControllerImpl();
+            StudentConverterImpl studentConverter = new StudentConverterImpl();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            FileInputStream inputStream = new FileInputStream(path);
+            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            if (sheet == null) {
+                return null;
             }
-            String[] fullName = convert(sheet.getRow(row).getCell(cell).getStringCellValue());
-            if (fullName.length == 0) {
-                break;
+            int row = 0;
+            int cell = 0;
+            int dateRow = 0;
+            int labsRow = 0;
+            String[] filePath = path.replace("\\", "/").split("/");
+            String groupId = filePath[filePath.length - 1].replace(".xls", "");
+            List<Student> studentList = new ArrayList<>();
+            Group group = groupsController.createGroup(groupId, groups, studentList);
+            if (group == null) {
+                return null;
             }
-            Map<Date, Boolean> attendanceOfStudent = new HashMap<>();
-            Map<String, Boolean> passedOrFailedLabs = new HashMap<>();
-            cell += 1;
-            int countOfAttendance = 0;
             while (true) {
-                XSSFCell xssfCell = sheet.getRow(dateRow).getCell(cell);
-                if (xssfCell == null || xssfCell.getStringCellValue() == null || xssfCell.getStringCellValue().length() == 0) {
+                row += 1;
+                if (sheet.getRow(row) == null || sheet.getRow(row).getCell(cell) == null || sheet.getRow(row).getCell(cell).getStringCellValue() == null) {
                     break;
                 }
-                attendanceOfStudent.put(dateFormat.parse(sheet.getRow(dateRow).getCell(cell).getStringCellValue()), convertAttendance(sheet.getRow(row).getCell(cell).getStringCellValue()));
-                cell++;
-            }
-            cell++;
-            while (true) {
-                XSSFCell xssfCell = sheet.getRow(labsRow).getCell(cell);
-                if (xssfCell == null || xssfCell.getStringCellValue() == null || xssfCell.getStringCellValue().length() == 0) {
+                String[] fullName = convert(sheet.getRow(row).getCell(cell).getStringCellValue());
+                if (fullName.length == 0) {
                     break;
                 }
-                passedOrFailedLabs.put(sheet.getRow(labsRow).getCell(cell).getStringCellValue(), convertPassedOrFailedLab(sheet.getRow(row).getCell(cell).getStringCellValue()));
-                cell++;
-            }
-            for (Map.Entry<Date, Boolean> entry : attendanceOfStudent.entrySet()) {
-                if (entry.getValue()) {
-                    countOfAttendance += 1;
+                Map<Date, Boolean> attendanceOfStudent = new HashMap<>();
+                Map<String, Boolean> passedOrFailedLabs = new HashMap<>();
+                cell += 1;
+                int countOfAttendance = 0;
+                while (true) {
+                    XSSFCell xssfCell = sheet.getRow(dateRow).getCell(cell);
+                    if (xssfCell == null || xssfCell.getStringCellValue() == null || xssfCell.getStringCellValue().length() == 0) {
+                        break;
+                    }
+                    attendanceOfStudent.put(dateFormat.parse(sheet.getRow(dateRow).getCell(cell).getStringCellValue()), convertAttendance(sheet.getRow(row).getCell(cell).getStringCellValue()));
+                    cell++;
                 }
+                cell++;
+                while (true) {
+                    XSSFCell xssfCell = sheet.getRow(labsRow).getCell(cell);
+                    if (xssfCell == null || xssfCell.getStringCellValue() == null || xssfCell.getStringCellValue().length() == 0) {
+                        break;
+                    }
+                    passedOrFailedLabs.put(sheet.getRow(labsRow).getCell(cell).getStringCellValue(), convertPassedOrFailedLab(sheet.getRow(row).getCell(cell).getStringCellValue()));
+                    cell++;
+                }
+                for (Map.Entry<Date, Boolean> entry : attendanceOfStudent.entrySet()) {
+                    if (entry.getValue()) {
+                        countOfAttendance += 1;
+                    }
+                }
+                Student student = Student
+                        .builder()
+                        .studentId(studentConverter.convert(groupId, studentList))
+                        .groupId(groupId)
+                        .attendanceOfStudent(attendanceOfStudent)
+                        .passedOrFailedLab(passedOrFailedLabs)
+                        .countOfAttendance(countOfAttendance)
+                        .lastName(fullName[0])
+                        .firstName(fullName[1])
+                        .patronymic(fullName[2])
+                        .build();
+                studentList.add(student);
+                cell = 0;
             }
-            Student student = Student
-                    .builder()
-                    .studentId(studentConverter.convert(groupId, studentList))
-                    .groupId(groupId)
-                    .attendanceOfStudent(attendanceOfStudent)
-                    .passedOrFailedLab(passedOrFailedLabs)
-                    .countOfAttendance(countOfAttendance)
-                    .lastName(fullName[0])
-                    .firstName(fullName[1])
-                    .patronymic(fullName[2])
-                    .build();
-            studentList.add(student);
-            cell = 0;
+            group.setStudents(studentList);
+            inputStream.close();
+            workbook.close();
+            return group;
+        } catch (Exception e) {
+            return null;
         }
-        group.setStudents(studentList);
-        inputStream.close();
-        workbook.close();
-        return group;
     }
 
 
     /**
      * Метод, для конвертации строки в логику
-     * @param attendance  - посещение
+     *
+     * @param attendance - посещение
      * @return - посещение в логическом формате
      */
     @Override
@@ -283,8 +294,9 @@ public class FileConverterImpl implements FileConverter {
 
     /**
      * Конвертация в строку логического формата посещения
+     *
      * @param attendanceOfStudent - посещение студента
-     * @return  - посещение в строковом формате
+     * @return - посещение в строковом формате
      */
     @Override
     public String getAttendanceForTableByStudentAttendance(Boolean attendanceOfStudent) {
@@ -296,6 +308,7 @@ public class FileConverterImpl implements FileConverter {
 
     /**
      * Метод, конвертирующий boolean to string
+     *
      * @param passedOrFailedLab - сдача лабораторной
      * @return отметка о защите лабораторной в строковом формате
      */
@@ -309,6 +322,7 @@ public class FileConverterImpl implements FileConverter {
 
     /**
      * Convert string to boolean
+     *
      * @param passedOrFailedLab - сдача лабы
      * @return отметка о защите лабораторной в логическом формате
      */
@@ -319,6 +333,7 @@ public class FileConverterImpl implements FileConverter {
 
     /**
      * Получение фио из строки
+     *
      * @param fullName - ФИО
      * @return - ФИО[]
      */

@@ -49,11 +49,11 @@ public class GroupsControllerImpl implements GroupsController {
      * @return - удаленную группу, с целью дальнейшей проверки
      */
     @Override
-    public Group deleteGroup(String groupId, Groups groups) {
+    public Group deleteGroup(String groupId, Groups groups, String path) {
         if (groups == null) {
             return null;
         }
-        File selectedGroupForDeleting = new File("files" + "/" + groupId + ".xls");
+        File selectedGroupForDeleting = new File(path + "/" + groupId + ".xls");
         if (selectedGroupForDeleting.delete()) {
             Group group = groups.getGroups().remove(groupId);
             if (group == null) {

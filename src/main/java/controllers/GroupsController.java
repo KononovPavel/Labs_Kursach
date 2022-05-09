@@ -11,7 +11,7 @@ public interface GroupsController {
 
     public Group createGroup(String groupId, Groups groups, List<Student> students);
 
-    public Group deleteGroup(String groupId, Groups groups) throws FileNotFoundException;
+    public Group deleteGroup(String groupId, Groups groups, String path) throws FileNotFoundException;
 
     public boolean isGroupWasCreatedFirstly(String groupId, Groups groups);
 }

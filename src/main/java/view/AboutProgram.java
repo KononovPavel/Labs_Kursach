@@ -42,7 +42,7 @@ public class AboutProgram extends JFrame {
     private static final int sizeY = 768;
 
     private Font getCourierFont(int fontSize, int fontType) {
-        return new Font("Courier", fontType, fontSize);
+        return new Font("Arial", fontType, fontSize);
     }
 
     /**

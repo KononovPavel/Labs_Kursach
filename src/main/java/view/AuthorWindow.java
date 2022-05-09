@@ -32,7 +32,7 @@ public class AuthorWindow extends JFrame {
 
 
     private Font getCourierFont(int fontSize, int fontType) {
-        return new Font("Courier", fontType, fontSize);
+        return new Font("Arial", fontType, fontSize);
     }
 
     /**
